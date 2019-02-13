@@ -1,0 +1,55 @@
+VINA NICOLETA, 325CD
+
+	De-a lungul programului este utilizata functia-helper "print", ce realizeaza
+un apel de printf "safe", in sensul ca salveaza valorile ce se afla in registre
+la momentul in care este apelata.
+	Sirul de la Task1 se va gasi la adresa lui ecx, iar cheia imediat dupa acest
+sir, fiind astfel nevoie de aflarea lungimii acestuia. Se apeleaza functia 
+xor_strings cu argumentele ecx (sirul) si ebx (cheia), salvandu-se valorile din
+celelalte registre, apoi, cu ajutorul lui puts, se afiseaza sirul ecx, ce
+a fost suprascris in interiorul functiei. In functie se realizeaza xor byte cu
+byte intre cele doua siruri si rezultatul opertiei este pus apoi la adresa de
+memorie a mesajului, astfel ca la revenirea in main la adresa respectiva se va
+afla sirul decriptat.
+	Pentru Task2 se realizeaza lungimea cheii de la Task1, care se adauga lui ebx
+si astfel ebx ajunge sa puncteze la inceputul sirului necesar. Se apeleaza functia
+rolling_xor cu argument acest sir, se decripteaza si apoi se afiseaza cu puts.
+Decriptarea are loc iterand prin sir si realizand xor intre actualul byte si cel
+anterior, exceptie facand primul element ce ramane neschimbat, astfel ca fiecare
+byte din mesajul decriptat va fi rezultul xor-urilor dintre octetii de pana atunci.
+	In cadrul Task3, se afla lungimile sirurilor si se apeleaza functia xor_hex_strings
+ce are ca argumente sirul1 si sirul2(cheia), decriptandu-l in-place pe sirul1, 
+apoi acesta se printeaza. In interiorul functiei se iau cate 2 octeti din fiecare
+din cele 2 siruri, se transforma in hexazecimal si se face xor intre rezultate,
+iar ce se obtine se pune la adresa lui esi, astfel la final aici se gaseste sirul
+decriptat. Transformarea tine cont de faptul ca daca caracterul are ascii-ul mai
+mare ca 80, va fi litera si deci sare la eticheta corespunzatoare unde se scade
+87, rezultatul fiind mai mare sau egal cu 10, ce reprezinta litera in reprezentare
+hexazecimala (a->10, b->11,..).
+	Task4 incepe cu salvarea registrelor, apoi se apeleaza functia base32decode
+cu adresa ce se afla la ecx, adica sirul de decodat, in final apelandu-se puts
+tot pe aceasta adresa. In interiorul functiei se iau cate 40 biti, la o iteratie
+a buclei "continue" formand octeti din grupari de cate 5 biti din reprezentarea
+din tabelul din enunt, apoi urmand alti 40 biti si tot asa pana se intalneste
+primul "=".
+	Pentru Task5 s-a folosit functia find_key ce gaseste cheia, iterand prin sir
+si facand xor; atunci cand se gasesc consecutiv literele f, o, r, c, e, inseamna
+ca cheia este cea potrivita si se iese din aceasta functie. Daca nu, cheia se
+incrementeaza si se reia verificarea. In functia bruteforce_singlebyte_xor se
+aplica xor intre fiecare byte si cheia anterior determinata, suprascriindu-se
+noul rezultat la pozitia respectiva in sir.
+	In cadrul Task6 se apleaza functia break_substitution ce are ca argument
+adresa sirului ce trebuie decriptat, apoi se afiseaza acest sir, urmat de tabela
+de substitutie. In functie se calculeaza frecventa fiecarui caracter si daca se 
+decomenteaza cele 3 parti cu "call print" acestea se pot observa. Printand aceste
+frecvente, s-a realizat potrivirea frecventelor de la cea mai mare la cea mai mica
+cu sirul de frecvente dat din enunt (" etao.."); ele au fost inlocuite 
+corespunzator in ecx si vizual, pas cu pas, a avut loc alterarea tabelei in cateva
+portiuni (spre exemplu, daca aparuse cuvantul "tge", "g"-ul a fost inlocuit cu "h",
+pentru a ajunge la "the"; sugestive au fost cuvintele mici de legatura ale limbii
+engleze: conjunctii, prepozitii). Astfel tabela formata, se itereaza prin sir si se
+inlocuieste fiecare caracter, prinr-o singura iterare a sirului (se adauga 100 la
+caracterul cu care se modifica), dar la printare se scade 100, pentru a se putea
+face substitutiile dintr-odata, conform cu tabela. 
+	
+	
